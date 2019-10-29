@@ -3,9 +3,9 @@ const yargs = require("yargs");
 const storage = require('node-persist');
 
 //  Game board 5 x 5 matrix
-const gameBoard = [
+let gameBoard = [
     [1, 2, 3, 4, 5],
-    [6, 7, 8, 9, 10]
+    [6, 7, 8, 9, 10],
     [11, 12, 13, 14, 15],
     [16, 17, 18, 19, 20],
     [21, 22, 23, 24, 25]
@@ -68,7 +68,7 @@ const options = yargs
 .command("REPORT", "show current position of toy robot", () => {}, async (argv) => {
     let position = await getPosition();
     if(position) {
-        console.log("OUTPUT:", await(getPosition()));
+        console.log("OUTPUT:", position[0]+","+position[1]+","+position[2]);
     }
     else {
         console.log("OUTPUT:", "No position set");
@@ -98,28 +98,22 @@ async function setPosition(position) {
 }
 
 //  Move position 1 position forward based on current bearing
-async function movePosition(position) {
-    console.log("old position:", position);
+function movePosition(position) {
     let b = bearing[position[2]];
     position[0] += b[0];
     position[1] += b[1]; 
-    console.log("new position:", position);
     setPosition(position);
 }
 
 //  Rotate position to the left
-async function rotateLeft(position) {
-    console.log("old position:", position);
+function rotateLeft(position) {
     position[2] = rotateDirection[position[2]].LEFT;
-    console.log("new position:", position);
     setPosition(position);
 }
 
 //  Rotate position to the right
-async function rotateRight(position) {
-    console.log("old position:", position);
+function rotateRight(position) {
     position[2] = rotateDirection[position[2]].RIGHT;
-    console.log("new position:", position);
     setPosition(position);
 }
 
