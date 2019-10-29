@@ -92,29 +92,29 @@ async function setPosition(position) {
         await storage.setItem('position', position);
     }
     else {
-        console.log("Invalid position");
+        console.log("INVALID POSITION");
         return false;
     }
 }
 
 //  Move position 1 position forward based on current bearing
-function movePosition(position) {
+async function movePosition(position) {
     let b = bearing[position[2]];
     position[0] += b[0];
     position[1] += b[1]; 
-    setPosition(position);
+    await setPosition(position);
 }
 
 //  Rotate position to the left
-function rotateLeft(position) {
+async function rotateLeft(position) {
     position[2] = rotateDirection[position[2]].LEFT;
-    setPosition(position);
+    await setPosition(position);
 }
 
 //  Rotate position to the right
-function rotateRight(position) {
+async function rotateRight(position) {
     position[2] = rotateDirection[position[2]].RIGHT;
-    setPosition(position);
+    await setPosition(position);
 }
 
 //  Validate the position based on game board
