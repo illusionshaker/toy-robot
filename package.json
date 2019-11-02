@@ -4,8 +4,11 @@
   "description": "Toy Robot Game",
   "main": "src/index.js",
   "scripts": {
-    "start": "src/index/js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "simulation": "npm run simulation-a && npm run simulation-b && npm run simulation-c",
+    "simulation-a": "node . PLACE 0,0,NORTH && node . MOVE && node . REPORT",
+    "simulation-b": "node . PLACE 0,0,NORTH && node . LEFT && node . REPORT",
+    "simulation-c": "node . PLACE 1,2,EAST && node . MOVE && node . MOVE && node . LEFT && node . MOVE && node . REPORT",
+    "test": "jest --coverage"
   },
   "keywords": [],
   "author": "Mathew Ng",
@@ -16,5 +19,8 @@
   "dependencies": {
     "node-persist": "^3.0.5",
     "yargs": "^14.2.0"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
   }
 }
