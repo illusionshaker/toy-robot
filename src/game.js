@@ -2,7 +2,7 @@ const storage = require('node-persist');
 const {GAMEBOARD, BEARING, ROTATEDIRECTION} = require('./config');
 
 const PLACE = async function(argv) {
-    let position = getPositionFromArgs(argv);
+    const position = getPositionFromArgs(argv);
 
     if(await setPosition(position)) {
         return true;
@@ -12,7 +12,7 @@ const PLACE = async function(argv) {
 };
 
 const MOVE = async function() {
-    let position = await getPosition();
+    const position = await getPosition();
 
     if(position) {
         return await movePosition(position)
@@ -22,7 +22,7 @@ const MOVE = async function() {
 };
 
 const LEFT = async function() {
-    let position = await getPosition();
+    const position = await getPosition();
 
     if(position) {
         return await rotateLeft(position)
@@ -32,7 +32,7 @@ const LEFT = async function() {
 };
 
 const RIGHT = async function() {
-    let position = await getPosition();
+    const position = await getPosition();
 
     if(position) {
         return await rotateRight(position);
@@ -42,7 +42,7 @@ const RIGHT = async function() {
 };
 
 const REPORT = async function() {
-    let position = await getPosition();
+    const position = await getPosition();
 
     if(position) {
         console.log("OUTPUT: " + position[0]+","+position[1]+","+position[2]);
@@ -53,14 +53,14 @@ const REPORT = async function() {
 };
 
 //  Get the current position
-let getPosition = async function() {
+const getPosition = async function() {
     await storage.init();
-    let position = await storage.getItem('position');
+    const position = await storage.getItem('position');
     return position ? position : false;
 };
 
 //  Set the position if validate
-let setPosition = async function(position) {
+const setPosition = async function(position) {
     await storage.init();
     if(validatePosition(position)) {
         await storage.setItem('position', position);
@@ -73,27 +73,27 @@ let setPosition = async function(position) {
 };
 
 //  Move position 1 position forward based on current bearing
-let movePosition = async function(position) {
-    let b = BEARING[position[2]];
+const movePosition = async function(position) {
+    const b = BEARING[position[2]];
     position[0] += b[0];
     position[1] += b[1]; 
     return await setPosition(position);
 };
 
 //  Rotate position to the left
-let rotateLeft = async function(position) {
+const rotateLeft = async function(position) {
     position[2] = ROTATEDIRECTION[position[2]].LEFT;
     return await setPosition(position);
 };
 
 //  Rotate position to the right
-let rotateRight = async function(position) {
+const rotateRight = async function(position) {
     position[2] = ROTATEDIRECTION[position[2]].RIGHT;
     return await setPosition(position);
 };
 
 //  Validate the position based on game board
-let validatePosition = function(position) {
+const validatePosition = function(position) {
     try {
         return GAMEBOARD[position[0]][position[1]];
     }
@@ -102,8 +102,8 @@ let validatePosition = function(position) {
     }
 };
 
-let getPositionFromArgs = function(argv) {
-    let position = argv.split(',');
+const getPositionFromArgs = function(argv) {
+    const position = argv.split(',');
     try {
         position[0] = parseInt(position[0], 10);
         position[1] = parseInt(position[1], 10);
